@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Vue测试2</title>
+    <script src="js/vuejs-2.5.16.js"></script>
+    <script src="plugins/jQuery/jquery-2.2.3.min.js"></script>
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="plugins/iCheck/icheck.min.js"></script>
+    <script src="js/vuejs-2.5.16.js"></script>
+    <script src="js/axios-0.18.0.js"></script>
+    <script src="js/login.js"></script>
+    <style type="text/css">
+    </style>
+</head>
+<body>
+    <div id="app">
+        {{userId}}
+    </div>
+<script>
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) {
+            return unescape(r[2]);
+        }
+        return null;
+    };
+
+
+    new Vue({
+            el: "#app",
+            data: {
+                userId:''
+            },
+            methods: {
+            },
+            //通过计算属性过滤数据
+            computed:{
+            },
+            created:function() {
+                this.userId=GetQueryString("userId");
+                alert(this.userId);
+            }
+        }
+    )
+</script>
+</body>
+</html>

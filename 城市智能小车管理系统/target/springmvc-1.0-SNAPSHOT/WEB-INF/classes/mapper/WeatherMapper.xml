@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jwj.dao.WeatherMapper" >
+  <resultMap id="BaseResultMap" type="com.jwj.entity.Weather" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="weathertime" property="weathertime" jdbcType="VARCHAR" />
+    <result column="weathertype" property="weathertype" jdbcType="VARCHAR" />
+    <result column="pm2_5" property="pm25" jdbcType="INTEGER" />
+    <result column="co2" property="co2" jdbcType="INTEGER" />
+    <result column="temperature" property="temperature" jdbcType="INTEGER" />
+    <result column="lightintensity" property="lightintensity" jdbcType="INTEGER" />
+    <result column="humidity" property="humidity" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, weathertime, weathertype, pm2_5, co2, temperature, lightintensity, humidity
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jwj.entity.WeatherExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from weather
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from weather
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from weather
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jwj.entity.WeatherExample" >
+    delete from weather
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jwj.entity.Weather" >
+    insert into weather (id, weathertime, weathertype, 
+      pm2_5, co2, temperature, 
+      lightintensity, humidity)
+    values (#{id,jdbcType=INTEGER}, #{weathertime,jdbcType=VARCHAR}, #{weathertype,jdbcType=VARCHAR}, 
+      #{pm25,jdbcType=INTEGER}, #{co2,jdbcType=INTEGER}, #{temperature,jdbcType=INTEGER}, 
+      #{lightintensity,jdbcType=INTEGER}, #{humidity,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jwj.entity.Weather" >
+    insert into weather
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="weathertime != null" >
+        weathertime,
+      </if>
+      <if test="weathertype != null" >
+        weathertype,
+      </if>
+      <if test="pm25 != null" >
+        pm2_5,
+      </if>
+      <if test="co2 != null" >
+        co2,
+      </if>
+      <if test="temperature != null" >
+        temperature,
+      </if>
+      <if test="lightintensity != null" >
+        lightintensity,
+      </if>
+      <if test="humidity != null" >
+        humidity,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="weathertime != null" >
+        #{weathertime,jdbcType=VARCHAR},
+      </if>
+      <if test="weathertype != null" >
+        #{weathertype,jdbcType=VARCHAR},
+      </if>
+      <if test="pm25 != null" >
+        #{pm25,jdbcType=INTEGER},
+      </if>
+      <if test="co2 != null" >
+        #{co2,jdbcType=INTEGER},
+      </if>
+      <if test="temperature != null" >
+        #{temperature,jdbcType=INTEGER},
+      </if>
+      <if test="lightintensity != null" >
+        #{lightintensity,jdbcType=INTEGER},
+      </if>
+      <if test="humidity != null" >
+        #{humidity,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jwj.entity.WeatherExample" resultType="java.lang.Integer" >
+    select count(*) from weather
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update weather
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.weathertime != null" >
+        weathertime = #{record.weathertime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weathertype != null" >
+        weathertype = #{record.weathertype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pm25 != null" >
+        pm2_5 = #{record.pm25,jdbcType=INTEGER},
+      </if>
+      <if test="record.co2 != null" >
+        co2 = #{record.co2,jdbcType=INTEGER},
+      </if>
+      <if test="record.temperature != null" >
+        temperature = #{record.temperature,jdbcType=INTEGER},
+      </if>
+      <if test="record.lightintensity != null" >
+        lightintensity = #{record.lightintensity,jdbcType=INTEGER},
+      </if>
+      <if test="record.humidity != null" >
+        humidity = #{record.humidity,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update weather
+    set id = #{record.id,jdbcType=INTEGER},
+      weathertime = #{record.weathertime,jdbcType=VARCHAR},
+      weathertype = #{record.weathertype,jdbcType=VARCHAR},
+      pm2_5 = #{record.pm25,jdbcType=INTEGER},
+      co2 = #{record.co2,jdbcType=INTEGER},
+      temperature = #{record.temperature,jdbcType=INTEGER},
+      lightintensity = #{record.lightintensity,jdbcType=INTEGER},
+      humidity = #{record.humidity,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jwj.entity.Weather" >
+    update weather
+    <set >
+      <if test="weathertime != null" >
+        weathertime = #{weathertime,jdbcType=VARCHAR},
+      </if>
+      <if test="weathertype != null" >
+        weathertype = #{weathertype,jdbcType=VARCHAR},
+      </if>
+      <if test="pm25 != null" >
+        pm2_5 = #{pm25,jdbcType=INTEGER},
+      </if>
+      <if test="co2 != null" >
+        co2 = #{co2,jdbcType=INTEGER},
+      </if>
+      <if test="temperature != null" >
+        temperature = #{temperature,jdbcType=INTEGER},
+      </if>
+      <if test="lightintensity != null" >
+        lightintensity = #{lightintensity,jdbcType=INTEGER},
+      </if>
+      <if test="humidity != null" >
+        humidity = #{humidity,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jwj.entity.Weather" >
+    update weather
+    set weathertime = #{weathertime,jdbcType=VARCHAR},
+      weathertype = #{weathertype,jdbcType=VARCHAR},
+      pm2_5 = #{pm25,jdbcType=INTEGER},
+      co2 = #{co2,jdbcType=INTEGER},
+      temperature = #{temperature,jdbcType=INTEGER},
+      lightintensity = #{lightintensity,jdbcType=INTEGER},
+      humidity = #{humidity,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
